@@ -23,7 +23,7 @@ the following tools first:
 Follow the [step-by-step instructions][].
 
 **WARNING**: The final specification
-[TokenTransfer8.tla](../examples/TokenTransfer8.tla) is **not** a
+[./examples/TokenTransfer8.tla](../examples/TokenTransfer8.tla) is **not** a
 complete specification of [ICS20][].  If you want to specify [ICS20][],
 you have to introduce the following features:
 
