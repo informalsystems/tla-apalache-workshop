@@ -10,15 +10,15 @@ CHANNELS ==
     IN
     { pair("A", "B") }
 ACCOUNTS == { "reserve", "escrow", "anna", "boris" }
-DENOMS == { "A", "B", "AonB", "BonA" }
+DENOMS == { "A", "B", "B/A", "A/B" }
 AMOUNTS == Nat \*0..5 \* you can use Nat in Apalache
 GENESIS_SUPPLY == [ c \in CHAINS |-> 100 ]
 MK_DENOM == [
     c \in CHAINS, d \in DENOMS |->
         IF c = "A" /\ d = "B"
-        THEN "BonA"
+        THEN "A/B"
         ELSE IF c = "B" /\ d = "A"
-        THEN "AonB"
+        THEN "B/A"
         ELSE "invalid"
 ]
 
