@@ -20,7 +20,7 @@ VARIABLES
     \* @type: Set([src: Str, dest: Str, data: [sender: Str, receiver: Str, amount: Int]]);
     sentPackets
 
-\* we have 3 accounts per chain, so SumAdresses has to be unrolled up to 3 times
+\* we have 4 accounts per chain, so SumAdresses has to be unrolled up to 3 times
 UNROLL_TIMES_SumAddresses == 4
 \* when the recursive operator is unrolled UNROLL_TIMES_SumAddresses times,
 \* use UNROLL_DEFAULT_SumAddresses as a default
