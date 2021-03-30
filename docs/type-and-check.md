@@ -241,5 +241,5 @@ and check the property again.
 
 If you are not tired, you can check
 [ICS20](https://github.com/cosmos/ics/tree/master/spec/ics-020-fungible-token-transfer)
-and improve `TokenTransfer9.tla` to support the full token transfer protocol.
+and improve `TokenTransfer10.tla` to support the full token transfer protocol.
 
