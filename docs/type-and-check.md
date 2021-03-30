@@ -223,6 +223,19 @@ similar to what we did with `MC5.tla`.
 1. Uncomment the precondition in the definition of `InFlyPacketIsSecured`
 and check the property again.
 
+## Version 10: Adding timeouts
+
+1. Open [TokenTransfer10.tla](../examples/TokenTransfer10.tla) and
+[MC10.tla](../examples/MC10.tla).
+1. Notice the changes:
+  - new variables: `srcTimeoutNums` and `dstTimeoutNums`
+  - new operators: `RegisterTimeout` and `ApplyTimeout`
+1. Check the property `InFlyPacketIsSecured` by running:
+
+    ```sh
+    $ apalache-mc check --inv=InFlyPacketIsSecured MC10.tla
+    ```
+
 
 ## Version NNN: Fungible token transfer
 
