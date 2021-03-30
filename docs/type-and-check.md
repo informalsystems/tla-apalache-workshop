@@ -204,6 +204,26 @@ Do you understand what happened?
 this property for all executions, construct an inductive invariant,
 similar to what we did with `MC5.tla`.
 
+## Version 9: Sending coins back
+
+1. Open [TokenTransfer9.tla](../examples/TokenTransfer9.tla) and
+[MC9.tla](../examples/MC9.tla).
+1. Notice the changes:
+  - new constant `UNMK_DENOM`
+  - new operators: `SendPacket`, `BurnCoins`, `SendPacketToSource`,
+    `ReceivePacketOnSource`
+1. Check the property `InFlyPacketIsSecured` by running:
+
+    ```sh
+    $ apalache-mc check --inv=InFlyPacketIsSecured MC9.tla
+    ```
+
+1. Check `counterexample.tla` for an example.
+
+1. Uncomment the precondition in the definition of `InFlyPacketIsSecured`
+and check the property again.
+
+
 ## Version NNN: Fungible token transfer
 
 If you are not tired, you can check
