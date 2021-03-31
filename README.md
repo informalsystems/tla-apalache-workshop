@@ -54,4 +54,4 @@ you have to introduce the following features:
 [Building Apalache from source]: https://apalache.informal.systems/docs/apalache/installation/source.html
 [Apalache releases]: https://github.com/informalsystems/apalache/releases
 [step-by-step instructions]: ./docs/type-and-check.md 
-[ICS20]: https://github.com/cosmos/ics/tree/master/spec/ics-020-fungible-token-transfer
+[ICS20]: https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer
