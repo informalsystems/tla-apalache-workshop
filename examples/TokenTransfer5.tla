@@ -12,7 +12,7 @@
  *
  * Igor Konnov, 2021
  *)
-EXTENDS Integers
+EXTENDS Integers, Apalache, typedefs
 
 CONSTANT
     \* A set of blockchains, i.e., their names
@@ -21,9 +21,6 @@ CONSTANT
     \* A set of accounts, i.e., their names
     \* @type: Set(Str);
     ACCOUNTS,
-    \* A set of all possible amounts
-    \* @type: Set(Int);
-    AMOUNTS,
     \* Initial supply for every chain
     \* @type: Str -> Int;
     GENESIS_SUPPLY
@@ -35,26 +32,25 @@ VARIABLES
     banks
 
 (*************************** OPERATORS ***************************************)
-RECURSIVE SumAddresses(_)
-SumAddresses(Addrs) ==
-    IF Addrs = {}
-    THEN 0
-    ELSE LET addr == CHOOSE a \in Addrs: TRUE IN
-         banks[addr] + SumAddresses(Addrs \ {addr})
+\* @type: (ADDR -> Int, Set(ADDR)) => Int;
+SumAddresses(amounts, Addrs) ==
+    LET Add(sum, addr) == sum + amounts[addr] IN
+    FoldSet(Add, 0, Addrs)
 
-ChainSupply(chain) ==
-    SumAddresses({chain} \X ACCOUNTS)
+\* @type: (ADDR -> Int, CHAIN) => Int;
+ChainSupply(amounts, chain) ==
+    SumAddresses(amounts, {chain} \X ACCOUNTS)
 
 (**************************** SYSTEM *****************************************)
 
 \* Initialize the world, e.g., from the last upgrade
 Init ==
-    \E b \in [ CHAINS \X ACCOUNTS -> AMOUNTS ]:
+    \E b \in [ CHAINS \X ACCOUNTS -> Nat ]:
         /\ \A chain \in CHAINS:
-            b[chain, "reserve"] > 0
+            /\ b[chain, "reserve"] > 0
+            /\ ChainSupply(b, chain) = GENESIS_SUPPLY[chain]
         /\ banks = b
-        /\ \A c \in CHAINS:
-             ChainSupply(c) = GENESIS_SUPPLY[c]
+
 
 \* Transfer the tokens from on account to another (on the same chain)
 LocalTransfer(chain, from, to, amount) ==
@@ -67,7 +63,7 @@ LocalTransfer(chain, from, to, amount) ==
 
 \* Update the world        
 Next ==
-    \E chain \in CHAINS, from, to \in ACCOUNTS, amount \in AMOUNTS:
+    \E chain \in CHAINS, from, to \in ACCOUNTS, amount \in Nat:
         LocalTransfer(chain, from, to, amount)
 
 (************************** PROPERTIES ***************************************)
@@ -85,16 +81,16 @@ NoNegativeAccounts ==
 \* the supply remains constant
 ChainSupplyUnchanged ==
     \A chain \in CHAINS:
-        LET supply == ChainSupply(chain) IN
+        LET supply == ChainSupply(banks, chain) IN
         supply = GENESIS_SUPPLY[chain]
 
 (***************** INDUCTIVE INVARIANT ***************************************)
 TypeOK ==
-    banks \in [ CHAINS \X ACCOUNTS -> AMOUNTS ]
+    banks \in [ CHAINS \X ACCOUNTS -> Nat ]
 
 IndInv ==
     /\ TypeOK
     /\ \A c \in CHAINS:
-        ChainSupply(c) = GENESIS_SUPPLY[c]
+        ChainSupply(banks, c) = GENESIS_SUPPLY[c]
 
 ===============================================================================

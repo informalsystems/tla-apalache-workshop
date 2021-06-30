@@ -17,41 +17,38 @@
  *
  * Igor Konnov, 2021
  *)
-EXTENDS Integers
+EXTENDS Integers, Apalache, typedefs
 
 CONSTANT
     \* A set of blockchains, i.e., their names
-    \* @type: Set(Str);
+    \* @type: Set(CHAIN);
     CHAINS,
     \* A set of channels, that is, pairs of chains
-    \* @type: Set(<<Str, Str>>);
+    \* @type: Set(<<CHAIN, CHAIN>>);
     CHANNELS,
     \* A set of accounts, i.e., their names
-    \* @type: Set(Str);
+    \* @type: Set(ACCOUNT);
     ACCOUNTS,
     \* A set of all possible amounts
     \* @type: Set(Int);
-    AMOUNTS,
-    \* Initial supply for every chain
-    \* @type: Str -> Int;
     GENESIS_SUPPLY,
     \* A set of denominations
-    \* @type: Set(Str);
+    \* @type: Set(DENOM);
     DENOMS,
     \* A function that produces a new denomination for a chain a denomination
-    \* @type: <<Str, Str>> -> Str;
+    \* @type: <<CHAIN, DENOM>> -> DENOM;
     MK_DENOM,
     \* A function that should work as an inverse of MK_DENOM
-    \* @type: <<Str, Str>> -> Str;
+    \* @type: <<CHAIN, DENOM>> -> DENOM;
     UNMK_DENOM
 
 VARIABLES
     \* For every chain and account, store the amount of tokens in the account
     \* for each denomination
-    \* @type: <<Str, Str, Str>> -> Int;
+    \* @type: DADDR -> Int;
     banks,
     \* Packets that are sent by one chain to another (e.g., via an IBC channel)
-    \* @type: Set([seqno: Int, src: Str, dest: Str, data: [sender: Str, receiver: Str, denom: Str, amount: Int]]);
+    \* @type: Set([seqno: Int, src: CHAIN, dest: CHAIN, data: [sender: ACCOUNT, receiver: ACCOUNT, denom: DENOM, amount: Int]]);
     sentPackets,
     \* The sequence numbers of delivered packets
     \* @type: Set(Int);
@@ -74,15 +71,14 @@ Escrow == "escrow"
 \* For simplicity, we call the coin native if it has the same name as the chain
 Native(chain) == chain
 
-RECURSIVE SumAddresses(_)
-SumAddresses(Addrs) ==
-    IF Addrs = {}
-    THEN 0
-    ELSE LET addr == CHOOSE a \in Addrs: TRUE IN
-         banks[addr] + SumAddresses(Addrs \ {addr})
+\* @type: (DADDR -> Int, Set(DADDR)) => Int;
+SumAddresses(amounts, Addrs) ==
+    LET Add(sum, addr) == sum + amounts[addr] IN
+    FoldSet(Add, 0, Addrs)
 
-ChainSupply(chain) ==
-    SumAddresses({ chain } \X ACCOUNTS \X { Native(chain) })
+\* @type: (DADDR -> Int, CHAIN) => Int;
+ChainSupply(amounts, chain) ==
+    SumAddresses(amounts, {chain} \X ACCOUNTS \X { Native(chain) })
 
 (**************************** SYSTEM *****************************************)
 
@@ -93,15 +89,14 @@ Init ==
     /\ deliveredNums = {}
     /\ dstTimeoutNums = {}
     /\ srcTimeoutNums = {}
-    /\ \E b \in [ CHAINS \X ACCOUNTS \X DENOMS -> AMOUNTS ]:
+    /\ \E b \in [ CHAINS \X ACCOUNTS \X DENOMS -> Nat ]:
         /\ \A chain \in CHAINS:
             /\ b[chain, "reserve", chain] > 0
+            /\ ChainSupply(b, chain) = GENESIS_SUPPLY[chain]
             /\ \A a \in ACCOUNTS, d \in DENOMS:
                 \* no tokens in foreign denominations
                 d /= Native(chain) => b[chain, a, d] = 0
         /\ banks = b
-        /\ \A c \in CHAINS:
-             ChainSupply(c) = GENESIS_SUPPLY[c]
 
 \* Transfer the tokens from on account to another (on the same chain)
 LocalTransfer(chain, from, to, denom, amount) ==
@@ -115,7 +110,7 @@ LocalTransfer(chain, from, to, denom, amount) ==
 \* A computation on the local chain
 LocalStep ==
     /\ \E chain \in CHAINS, from, to \in ACCOUNTS,
-                denom \in DENOMS, amount \in AMOUNTS:
+                denom \in DENOMS, amount \in Nat:
         /\ from /= Escrow
         /\ to /= Escrow
         /\ LocalTransfer(chain, from, to, denom, amount)
@@ -141,7 +136,7 @@ SendPacket(chan, dir, sender, receiver, denom, amount) ==
 \* Send a packet to transfer tokens (from the source)
 SendPacketFromSource ==
     \E chan \in CHANNELS, sender, receiver \in ACCOUNTS,
-            denom \in DENOMS, amount \in AMOUNTS:
+            denom \in DENOMS, amount \in Nat:
         /\ sender /= Escrow /\ receiver /= Escrow
         /\ amount > 0
         \* the source direction: escrow source tokens
@@ -160,7 +155,7 @@ BurnCoins(chain, sender, denom, amount) ==
 \* Send a packet to return tokens (to the source)
 SendPacketToSource ==
     \E chan \in CHANNELS, sender, receiver \in ACCOUNTS,
-            denom \in DENOMS, amount \in AMOUNTS:
+            denom \in DENOMS, amount \in Nat:
         /\ sender /= Escrow /\ receiver /= Escrow
         /\ amount > 0
         \* in the direction of the source: burn coins
@@ -249,7 +244,7 @@ NoNegativeAccounts ==
 \* the supply remains constant
 ChainSupplyUnchanged ==
     \A chain \in CHAINS:
-        LET supply == ChainSupply(chain) IN
+        LET supply == ChainSupply(banks, chain) IN
         supply = GENESIS_SUPPLY[chain]
 
 \* for each in-fly packet, there is enough money in the escrow account
@@ -266,20 +261,5 @@ InFlyPacketIsSecured ==
 NoForeignCoins ==
     \A chain \in CHAINS, acc \in ACCOUNTS, d \in DENOMS:
             d /= Native(chain) => banks[chain, acc, d] = 0
-
-
-(***************** INDUCTIVE INVARIANT ***************************************)
-(*
-
-TODO: update the inductive invariant by following the pattern
-
-TypeOK ==
-    banks \in [ CHAINS \X ACCOUNTS -> AMOUNTS ]
-
-IndInv ==
-    /\ TypeOK
-    /\ \A c \in CHAINS:
-        ChainSupply(c) = GENESIS_SUPPLY[c]
- *)        
 
 ===============================================================================

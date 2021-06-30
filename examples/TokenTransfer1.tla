@@ -8,19 +8,21 @@
  *
  * Igor Konnov, 2021
  *)
-EXTENDS Integers
+EXTENDS Integers, typedefs
+
+\* check typedefs.tla for type aliases
 
 CONSTANT
     \* A set of blockchains, i.e., their names
-    \* @type: Set(Str);
+    \* @type: Set(CHAIN);
     CHAINS,
     \* A set of accounts, i.e., their names
-    \* @type: Set(Str);
+    \* @type: Set(ACCOUNTS);
     ACCOUNTS
 
 VARIABLES
     \* For every chain and account, store the amount of tokens in the account
-    \* @type: <<Str, Str>> -> Int;
+    \* @type: ADDR -> Int;
     banks
 
 \* Initialize the world, e.g., from the last upgrade

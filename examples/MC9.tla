@@ -11,7 +11,6 @@ CHANNELS ==
     { pair("A", "B") }
 ACCOUNTS == { "reserve", "escrow", "anna", "boris" }
 DENOMS == { "A", "B", "B/A", "A/B" }
-AMOUNTS == Nat \*0..5 \* you can use Nat in Apalache
 GENESIS_SUPPLY == [ c \in CHAINS |-> 100 ]
 MK_DENOM == [
     c \in CHAINS, d \in DENOMS |->
@@ -42,12 +41,6 @@ VARIABLES
     \* An imaginary global counter that we use to assign unique sequence numbers
     \* @type: Int;
     seqno
-
-\* we have 4 accounts per chain, so SumAdresses has to be unrolled up to 3 times
-UNROLL_TIMES_SumAddresses == 4
-\* when the recursive operator is unrolled UNROLL_TIMES_SumAddresses times,
-\* use UNROLL_DEFAULT_SumAddresses as a default
-UNROLL_DEFAULT_SumAddresses == 0
 
 INSTANCE TokenTransfer9
 ===============================================================================

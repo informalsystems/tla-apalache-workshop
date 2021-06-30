@@ -10,34 +10,43 @@
  *
  * Igor Konnov, 2021
  *)
-EXTENDS Integers
+EXTENDS Integers, Apalache, typedefs
 
 CONSTANT
     \* A set of blockchains, i.e., their names
-    \* @type: Set(Str);
+    \* @type: Set(CHAIN);
     CHAINS,
     \* A set of accounts, i.e., their names
-    \* @type: Set(Str);
-    ACCOUNTS
+    \* @type: Set(ADDR);
+    ACCOUNTS,
+    \* Initial coin supply for every chain
+    \* @type: CHAIN -> Int;
+    GENESIS_SUPPLY
 
 VARIABLES
     \* For every chain and account, store the amount of tokens in the account
-    \* @type: <<Str, Str>> -> Int;
-    banks,
-    \* A ghost variable that stores the coin supply that was found initially
-    \* @type: Str -> Int;
-    genesisChainSupply
+    \* @type: ADDR -> Int;
+    banks
 
 (*************************** OPERATORS ***************************************)
-RECURSIVE SumAddresses(_)
-SumAddresses(Addrs) ==
+\* @type: (ADDR -> Int, Set(ADDR)) => Int;
+SumAddresses(amounts, Addrs) ==
+    LET Add(sum, addr) == sum + amounts[addr] IN
+    FoldSet(Add, 0, Addrs)
+
+\* @type: (ADDR -> Int, CHAIN) => Int;
+ChainSupply(amounts, chain) ==
+    SumAddresses(amounts, {chain} \X ACCOUNTS)
+
+(*
+\* If you know TLA+, this is the de-facto way of writing SumAddresses:
+RECURSIVE SumAddresses(_, _)
+SumAddresses(amounts, Addrs) ==
     IF Addrs = {}
     THEN 0
     ELSE LET addr == CHOOSE a \in Addrs: TRUE IN
-         banks[addr] + SumAddresses(Addrs \ {addr})
-
-ChainSupply(chain) ==
-    SumAddresses({chain} \X ACCOUNTS)
+         amounts[addr] + SumAddresses(amounts, Addrs \ {addr})
+ *)        
 
 (**************************** SYSTEM *****************************************)
 
@@ -45,9 +54,10 @@ ChainSupply(chain) ==
 Init ==
     \E b \in [ CHAINS \X ACCOUNTS -> Nat ]:
         /\ \A chain \in CHAINS:
-            b[chain, "reserve"] > 0
+            /\ b[chain, "reserve"] > 0
+            /\ ChainSupply(b, chain) = GENESIS_SUPPLY[chain]
         /\ banks = b
-        /\ genesisChainSupply = [ c \in CHAINS |-> ChainSupply(c) ]
+
 
 \* Transfer the tokens from on account to another (on the same chain)
 LocalTransfer(chain, from, to, amount) ==
@@ -60,9 +70,8 @@ LocalTransfer(chain, from, to, amount) ==
 
 \* Update the world        
 Next ==
-    /\ \E chain \in CHAINS, from, to \in ACCOUNTS, amount \in Nat:
+    \E chain \in CHAINS, from, to \in ACCOUNTS, amount \in Nat:
         LocalTransfer(chain, from, to, amount)
-    /\ UNCHANGED genesisChainSupply
 
 (************************** PROPERTIES ***************************************)
 
@@ -79,6 +88,6 @@ NoNegativeAccounts ==
 \* the supply remains constant
 ChainSupplyUnchanged ==
     \A chain \in CHAINS:
-        ChainSupply(chain) = genesisChainSupply[chain]
+        ChainSupply(banks, chain) = GENESIS_SUPPLY[chain]
 
 ===============================================================================

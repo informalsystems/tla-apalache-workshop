@@ -45,9 +45,8 @@ Can you fix the issue?
 the operators `SumAddresses` and `ChainSupply`.
 1. Check what has changed in `Init` and `Next`.
 1. Inspect the new invariant `ChainSupplyUnchanged`.
-1. Observe how we have introduced `GENESIS_SUPPLY` in [MC3.tla](../examples/MC3.tla).
-1. Observe how we have introduced `UNROLL_TIMES_SumAddresses` and
-`UNROLL_DEFAULT_SumAddresses` in [MC3.tla](../examples/MC3.tla).
+1. Observe how we have introduced `GENESIS_SUPPLY` in
+[MC3.tla](../examples/MC3.tla).
 
 1. Check the property `ChainSupplyUnchanged` by running:
 
@@ -55,7 +54,7 @@ the operators `SumAddresses` and `ChainSupply`.
     $ apalache-mc check --inv=ChainSupplyUnchanged MC3.tla
     ```
 
-1. Apalache is stuck at state 2. Any ideas why?    
+1. Apalache is stuck after some time. Any ideas why?    
 
 1. Check the detailed log by typing:
 
@@ -81,19 +80,7 @@ the log directly with `z3`:
     $ z3 -smt2 log0.smt
     ```
 
-## Version 4: Let's try it with the classical model checker TLC
-
-1. Run the TLA+ Toolbox and open [MC3.tla](../examples/MC3.tla).
-Run the model checker to check the invariant `ChainSupplyUnchanged` with TLC.
-1. Why does not it work?
-1. Open [TokenTransfer4.tla](../examples/TokenTransfer4.tla) and [MC4.tla](../examples/MC4.tla).
-1. Observe that we have replaced `Nat` with `AMOUNTS`, which is a finite set.
-1. Note carefully that `AMOUNTS == 0..5` in [MC4.tla](../examples/MC4.tla).
-1. Open [MC4.tla](../examples/MC4.tla) in TLA+ Toolbox and check `ChainSupplyUnchanged` with TLC again.
-1. Let's discuss why TLC worked and what it did.
-1. Let's change `AMOUNTS` to `0..10` and check `ChainSupplyUnchanged` with TLC
-again.
-1. Why is it slower now?
+## Version 4: skipped
 
 ## Version 5: Make Apalache fast again
 
@@ -105,13 +92,11 @@ again.
     ```sh
     $ apalache-mc check --init=IndInv --inv=IndInv --length=1 MC5.tla
     $ apalache-mc check --init=Init --inv=IndInv --length=0 MC5.tla
-    $ apalache-mc check --init=Init --inv=ChainSupplyUnchanged --length=0 MC5.tla
+    $ apalache-mc check --init=IndInv --inv=ChainSupplyUnchanged --length=0 MC5.tla
     ```
 
 1. Why do you think we have checked `ChainSupplyUnchanged` for the executions
 of arbitrary length?
-1. You can change `AMOUNTS` to `Nat` in [MC5.tla](../examples/MC5.tla) and
-run Apalache again.
 
 ## Version 6: Send packets!
 
@@ -174,7 +159,7 @@ choosing a transition in a step, not before.
     $ apalache-mc check --inv=ChainSupplyUnchanged --tuning=apalache.properties MC7.tla
     ```
 
-1. Apalache should find an error very quickly. Check `counterexample.tla`.
+1. Apalache should find an error very quickly. Check `counterexample1.tla`.
 Do you understand what happened?
 
 ## Version 8: Introducing denominations
@@ -197,7 +182,7 @@ Do you understand what happened?
 1. We can run Apalache again to check `ChainSupplyUnchanged`:
 
     ```sh
-    $ apalache-mc check --inv=ChainSupplyUnchanged --tuning=apalache.properties MC7.tla
+    $ apalache-mc check --inv=ChainSupplyUnchanged MC8.tla
     ```
 
 1. This time, Apalache does not come back that fast. If you want to prove

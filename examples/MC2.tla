@@ -6,7 +6,7 @@ ACCOUNTS == { "reserve", "anna", "boris" }
 
 \* introduce the global variables
 VARIABLES
-    \* @type: <<Str, Str>> -> Int;
+    \* @type: ADDR -> Int;
     banks
 
 INSTANCE TokenTransfer2
