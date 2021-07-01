@@ -27,6 +27,7 @@ you have to introduce the following missing features:
 
 ## 2. Learning more about TLA+
  
+ - [Apalache model checker][]
  - [TLA+ Home Page][]
  - [TLA+ Video Course][]
  - [Specifying Systems][]
@@ -49,7 +50,6 @@ you have to introduce the following missing features:
 [TLA+ Video Course]: http://lamport.azurewebsites.net/video/videos.html
 [TLA Toolbox]: https://lamport.azurewebsites.net/tla/toolbox.html
 [VScode plugin for TLA+]: https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus
-[igor/with-snowcat9]: https://github.com/informalsystems/apalache/tree/igor/with-snowcat9
 [Building Apalache from source]: https://apalache.informal.systems/docs/apalache/installation/source.html
 [Apalache releases]: https://github.com/informalsystems/apalache/releases
 [step-by-step instructions]: ./docs/type-and-check.md 
