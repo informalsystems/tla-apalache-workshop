@@ -71,14 +71,33 @@ Escrow == "escrow"
 \* For simplicity, we call the coin native if it has the same name as the chain
 Native(chain) == chain
 
+\* Compute the sum of tokens over addresses.
 \* @type: (DADDR -> Int, Set(DADDR)) => Int;
 SumAddresses(amounts, Addrs) ==
     LET Add(sum, addr) == sum + amounts[addr] IN
     FoldSet(Add, 0, Addrs)
 
+\* Compute token supply in one chain.
 \* @type: (DADDR -> Int, CHAIN) => Int;
 ChainSupply(amounts, chain) ==
     SumAddresses(amounts, {chain} \X ACCOUNTS \X { Native(chain) })
+
+\* Compute token supply across all chains.
+\* @type: (CHAIN => Int) => Int;
+AllChainsSupply(GetChainSupply(_)) ==
+    LET Add(sum, chain) == sum + GetChainSupply(chain) IN
+    FoldSet(Add, 0, CHAINS)
+
+\* Compute chain supply in the genesis block.
+AllChainsGenesisSupply ==
+    LET Get(c) == GENESIS_SUPPLY[c] IN
+    AllChainsSupply(Get)
+
+\* Compute chain supply given an "amounts" function
+\* @type: (DADDR -> Int) => Int;
+AllChainsAmountsSupply(amounts) ==
+    LET Get(c) == ChainSupply(amounts, c) IN
+    AllChainsSupply(Get)
 
 (**************************** SYSTEM *****************************************)
 
@@ -204,7 +223,7 @@ RegisterTimeout ==
         /\ dstTimeoutNums' = dstTimeoutNums \union { packet.seqno }
         /\ UNCHANGED <<banks, sentPackets, deliveredNums, srcTimeoutNums, seqno>>
 
-\* Observe a timeout on the destination chain and refund the coins.
+\* Observe a timeout on the destination chain and refund the coins on the source.
 \* Note that this cannot be simply done by measuring time.
 \* We need a confirmation on the destination chain that the timeout has occured.
 ApplyTimeout ==
@@ -253,6 +272,10 @@ InFlyPacketIsSecured ==
         (p.seqno \notin deliveredNums /\ p.seqno \notin srcTimeoutNums)
             =>
             banks[p.src, Escrow, p.data.denom] >= p.data.amount
+
+\* the supply over all chains remains constant
+AllChainsSupplyUnchanged ==
+    AllChainsGenesisSupply = AllChainsAmountsSupply(banks)
 
 (************* PROPERTIES TO PRODUCE COUNTEREXAMPLES *************************)
 

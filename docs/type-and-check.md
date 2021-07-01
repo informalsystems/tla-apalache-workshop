@@ -182,7 +182,7 @@ Do you understand what happened?
 1. We can run Apalache again to check `ChainSupplyUnchanged`:
 
     ```sh
-    $ apalache-mc check --inv=ChainSupplyUnchanged MC8.tla
+    $ apalache-mc check --inv=ChainSupplyUnchanged --tuning=apalache.properties MC7.tla
     ```
 
 1. This time, Apalache does not come back that fast. If you want to prove
@@ -221,6 +221,23 @@ and check the property again.
     $ apalache-mc check --inv=InFlyPacketIsSecured MC10.tla
     ```
 
+1. Check the property `AllChainsSupplyUnchanged` by running:
+
+    ```sh
+    $ apalache-mc check --inv=AllChainsSupplyUnchanged MC10.tla
+    ```
+
+## Writing unit tests
+
+1. Open [Test10.tla](../examples/Test10.tla).
+1. Read the definitions of operators `TestApplyTimeoutRequires`,
+   `TestApplyTimeoutAction`, and `TestApplyTimeoutEnsures`.
+1. Run the test as follows:
+
+    ```sh
+    $ apalache-mc check --init=TestApplyTimeoutRequires \
+      --next=TestApplyTimeoutAction --inv=TestApplyTimeoutEnsures --length=1 Test10.tla
+    ```
 
 ## Version NNN: Fungible token transfer
 
