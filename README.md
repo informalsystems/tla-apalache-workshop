@@ -1,7 +1,8 @@
 # Thinking about protocols with TLA+ and Apalache
 
-In this workshop, we are introducing TLA+ and its model checkers:
-TLC and Apalache. No prior knowledge of TLA+ is required.
+In this workshop, we are introducing TLA+ and the model checker
+[Apalache](https://apalache.informal.systems). No prior knowledge of TLA+ is
+required.
 
 ## 1. Step-by-step instructions
 
@@ -10,8 +11,8 @@ TLC and Apalache. No prior knowledge of TLA+ is required.
 If you want to reproduce the steps, make sure that you have installed
 the following tools first:
 
- - [TLA Toolbox][] or [VScode plugin for TLA+][]
- - Apalache version 0.15.9. Check [Apalache releases][].
+ - Apalache version 0.15.10. Check [Apalache releases][].
+ - **optional**: [TLA Toolbox][] or [VScode plugin for TLA+][]
 
 ### 1.2. Incremental specification of token transfer
 
@@ -20,7 +21,7 @@ Follow the [step-by-step instructions][].
 **WARNING**: The final specification
 [TokenTransfer10.tla](./examples/TokenTransfer10.tla) is **not** a
 complete specification of [ICS20][].  If you want to specify [ICS20][],
-you have to introduce the following features:
+you have to introduce the following missing features:
 
  - acknowledgments.
 
