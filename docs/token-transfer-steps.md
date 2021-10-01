@@ -2,7 +2,7 @@
 
 ## Version 1: Introducing data structures
 
-1. Open [TokenTransfer1.tla](../examples/TokenTransfer1.tla) and [MC1.tla](../examples/MC1.tla).
+1. Open [TokenTransfer1.tla](../examples/token-transfer/TokenTransfer1.tla) and [MC1.tla](../examples/token-transfer/MC1.tla).
 1. Notice how `CHAINS`, `ACCOUNTS`, and `banks` are declared.
 1. Run:
 
@@ -14,7 +14,7 @@
 
 ## Version 2: Let the banks do local banking
 
-1. Open [TokenTransfer2.tla](../examples/TokenTransfer2.tla) and [MC2.tla](../examples/MC2.tla).
+1. Open [TokenTransfer2.tla](../examples/token-transfer/TokenTransfer2.tla) and [MC2.tla](../examples/token-transfer/MC2.tla).
 1. Inspect the operators `LocalTransfer` and `Next`. Do you see any issues?
 1. Inspect the expected invariants `ReservesInv` and `NoNegativeAccounts`.
 Do you see any issues?
@@ -39,14 +39,14 @@ Can you fix the issue?
 
 ## Version 3: Fixing the invariants and introducing more properties
 
-1. Open [TokenTransfer3.tla](../examples/TokenTransfer3.tla) and [MC3.tla](../examples/MC3.tla).
+1. Open [TokenTransfer3.tla](../examples/token-transfer/TokenTransfer3.tla) and [MC3.tla](../examples/token-transfer/MC3.tla).
 1. See how we have fixed `NoNegativeAccounts` by using `Nat` instead of `Int`.
 1. Notice how we introduced the constant `GENESIS_SUPPLY` and
 the operators `SumAddresses` and `ChainSupply`.
 1. Check what has changed in `Init` and `Next`.
 1. Inspect the new invariant `ChainSupplyUnchanged`.
 1. Observe how we have introduced `GENESIS_SUPPLY` in
-[MC3.tla](../examples/MC3.tla).
+[MC3.tla](../examples/token-transfer/MC3.tla).
 
 1. Check the property `ChainSupplyUnchanged` by running:
 
@@ -84,8 +84,8 @@ the log directly with `z3`:
 
 ## Version 5: Make Apalache fast again
 
-1. Open [TokenTransfer5.tla](../examples/TokenTransfer5.tla) and
-[MC5.tla](../examples/MC5.tla).
+1. Open [TokenTransfer5.tla](../examples/token-transfer/TokenTransfer5.tla) and
+[MC5.tla](../examples/token-transfer/MC5.tla).
 1. Notice that we have added two new operators: `TypeOK` and `IndInv`.
 1. Run Apalache as follows:
 
@@ -100,8 +100,8 @@ of arbitrary length?
 
 ## Version 6: Send packets!
 
-1. Open [TokenTransfer6.tla](../examples/TokenTransfer6.tla) and
-[MC6.tla](../examples/MC6.tla).
+1. Open [TokenTransfer6.tla](../examples/token-transfer/TokenTransfer6.tla) and
+[MC6.tla](../examples/token-transfer/MC6.tla).
 1. Notice the changes:
   - new constant `CHANNELS`
   - new variable `sentPackets`
@@ -122,8 +122,8 @@ the sum of token over all in-fly packets?
 
 ## Version 7: Receive packets
 
-1. Open [TokenTransfer7.tla](../examples/TokenTransfer7.tla) and
-[MC7.tla](../examples/MC7.tla).
+1. Open [TokenTransfer7.tla](../examples/token-transfer/TokenTransfer7.tla) and
+[MC7.tla](../examples/token-transfer/MC7.tla).
 1. Notice the changes:
     - new field `seqno` in sentPackets
     - new variable `seqno`
@@ -164,8 +164,8 @@ Do you understand what happened?
 
 ## Version 8: Introducing denominations
 
-1. Open [TokenTransfer8.tla](../examples/TokenTransfer8.tla) and
-[MC8.tla](../examples/MC8.tla).
+1. Open [TokenTransfer8.tla](../examples/token-transfer/TokenTransfer8.tla) and
+[MC8.tla](../examples/token-transfer/MC8.tla).
 1. Notice the changes:
     - new constants `DENOMS` and `MK_DENOM`
     - new operator `Native`
@@ -191,8 +191,8 @@ similar to what we did with `MC5.tla`.
 
 ## Version 9: Sending coins back
 
-1. Open [TokenTransfer9.tla](../examples/TokenTransfer9.tla) and
-[MC9.tla](../examples/MC9.tla).
+1. Open [TokenTransfer9.tla](../examples/token-transfer/TokenTransfer9.tla) and
+[MC9.tla](../examples/token-transfer/MC9.tla).
 1. Notice the changes:
   - new constant `UNMK_DENOM`
   - new operators: `SendPacket`, `BurnCoins`, `SendPacketToSource`,
@@ -210,8 +210,8 @@ and check the property again.
 
 ## Version 10: Adding timeouts
 
-1. Open [TokenTransfer10.tla](../examples/TokenTransfer10.tla) and
-[MC10.tla](../examples/MC10.tla).
+1. Open [TokenTransfer10.tla](../examples/token-transfer/TokenTransfer10.tla) and
+[MC10.tla](../examples/token-transfer/MC10.tla).
 1. Notice the changes:
   - new variables: `srcTimeoutNums` and `dstTimeoutNums`
   - new operators: `RegisterTimeout` and `ApplyTimeout`
@@ -229,7 +229,7 @@ and check the property again.
 
 ## Writing unit tests
 
-1. Open [Test10.tla](../examples/Test10.tla).
+1. Open [Test10.tla](../examples/token-transfer/Test10.tla).
 1. Read the definitions of operators `TestApplyTimeoutRequires`,
    `TestApplyTimeoutAction`, and `TestApplyTimeoutEnsures`.
 1. Run the test as follows:

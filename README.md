@@ -11,15 +11,15 @@ required.
 If you want to reproduce the steps, make sure that you have installed
 the following tools first:
 
- - Apalache version 0.15.10. Check [Apalache releases][].
+ - Apalache version 0.16.2. Check [Apalache releases][].
  - **optional**: [TLA Toolbox][] or [VScode plugin for TLA+][]
 
 ### 1.2. Incremental specification of token transfer
 
-Follow the [step-by-step instructions][].
+Follow the [token transfer: step-by-step instructions][].
 
 **WARNING**: The final specification
-[TokenTransfer10.tla](./examples/TokenTransfer10.tla) is **not** a
+[TokenTransfer10.tla](./examples/token-transfer/TokenTransfer10.tla) is **not** a
 complete specification of [ICS20][].  If you want to specify [ICS20][],
 you have to introduce the following missing features:
 
@@ -52,5 +52,5 @@ you have to introduce the following missing features:
 [VScode plugin for TLA+]: https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus
 [Building Apalache from source]: https://apalache.informal.systems/docs/apalache/installation/source.html
 [Apalache releases]: https://github.com/informalsystems/apalache/releases
-[step-by-step instructions]: ./docs/type-and-check.md 
+[token transfer: step-by-step instructions]: ./docs/token-transfer-steps.md 
 [ICS20]: https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer
