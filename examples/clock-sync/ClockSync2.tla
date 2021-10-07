@@ -20,7 +20,7 @@ CONSTANTS
     \* @type: Int;
     t_max
 
-ASSUME(t_min >= 0 /\ t_max >= t_min)    
+ASSUME(t_min >= 0 /\ t_max > t_min)
 
 VARIABLES
     \* the reference clock, inaccessible to the processes
