@@ -108,7 +108,6 @@
 [ClockSync4]: ../examples/clock-sync/ClockSync4.tla
 [ClockSync5]: ../examples/clock-sync/ClockSync5.tla
 [ClockSync6]: ../examples/clock-sync/ClockSync6.tla
-[ClockSync6p]: ../examples/clock-sync/ClockSync6p.tla
 [ClockSync7]: ../examples/clock-sync/ClockSync7.tla
 [MC_ClockSync1]: ../examples/clock-sync/MC_ClockSync1.tla
 [MC_ClockSync2]: ../examples/clock-sync/MC_ClockSync2.tla
@@ -116,5 +115,6 @@
 [MC_ClockSync4]: ../examples/clock-sync/MC_ClockSync4.tla
 [MC_ClockSync5]: ../examples/clock-sync/MC_ClockSync5.tla
 [MC_ClockSync6]: ../examples/clock-sync/MC_ClockSync6.tla
+[MC_ClockSync6p]: ../examples/clock-sync/MC_ClockSync6p.tla
 [MC_ClockSync7]: ../examples/clock-sync/MC_ClockSync7.tla
 
