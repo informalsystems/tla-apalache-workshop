@@ -11,7 +11,7 @@
  *
  * Igor Konnov, 2021
  *)
-EXTENDS Integers
+EXTENDS Integers, Apalache
 
 CONSTANT
     \* A set of blockchains, i.e., their names
@@ -33,12 +33,10 @@ VARIABLES
     banks
 
 (*************************** OPERATORS ***************************************)
-RECURSIVE SumAddresses(_)
-SumAddresses(Addrs) ==
-    IF Addrs = {}
-    THEN 0
-    ELSE LET addr == CHOOSE a \in Addrs: TRUE IN
-         banks[addr] + SumAddresses(Addrs \ {addr})
+\* @type: (ADDR -> Int, Set(ADDR)) => Int;
+SumAddresses(amounts, Addrs) ==
+    LET Add(sum, addr) == sum + amounts[addr] IN
+    FoldSet(Add, 0, Addrs)
 
 ChainSupply(chain) ==
     SumAddresses({chain} \X ACCOUNTS)
