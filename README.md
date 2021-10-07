@@ -19,9 +19,9 @@ the following tools first:
 Material for the [TLA+ tutorial](http://conf.tlapl.us/202110/),
 co-located with [DISC 2021](http://www.disc-conference.org/wp/disc2021/).
 
-Check the specifications in [clock-sync](examples/clock-sync)
-and the extended version of the tutorial (TBA). Follow the
-[clock sync: step-by-step instructions][].
+Check the specifications in [clock-sync](examples/clock-sync) and the [extended
+version of the tutorial](https://www.youtube.com/watch?v=Ml7d_3vlH88). Follow
+the [clock sync: step-by-step instructions][].
 
 ### 1.3. Incremental specification of token transfer
 
