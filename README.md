@@ -14,7 +14,12 @@ the following tools first:
  - Apalache version 0.16.2. Check [Apalache releases][].
  - **optional**: [TLA Toolbox][] or [VScode plugin for TLA+][]
 
-### 1.2. Incremental specification of token transfer
+### 1.2. Incremental specification of clock synchronization
+
+Check the specifications in [clock-sync](examples/clock-sync)
+and the extended version of the tutorial (TBA).
+
+### 1.3. Incremental specification of token transfer
 
 Follow the [token transfer: step-by-step instructions][].
 
