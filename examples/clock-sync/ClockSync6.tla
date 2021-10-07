@@ -155,7 +155,9 @@ SkewInv ==
         \A p \in Proc: state[p] = "sync"
     IN
     LET boundedSkew ==
-        LET bound == (t_max - t_min) * (NProc - 1)
+        LET bound ==
+          \* extend the bound by NProc to account for rounding errors
+          (t_max - t_min) * (NProc - 1) + NProc * NProc
         IN
         \A p, q \in Proc:
             LET df == AC(p) - AC(q)

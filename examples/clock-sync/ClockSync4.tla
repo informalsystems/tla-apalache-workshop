@@ -88,7 +88,7 @@ AdjustClock(p, newDiff, newRcvd) ==
   IF fromAll
   THEN
     \* Assuming that Proc = { "p1", "p2" }.
-    \* See ClockSync5 for the general case.
+    \* See ClockSync6 for the general case.
     /\ adj' = [ adj EXCEPT ![p] = (newDiff[p, "p1"] + newDiff[p, "p2"]) \div 2 ]
     /\ state' = [ state EXCEPT ![p] = "sync" ]
   ELSE

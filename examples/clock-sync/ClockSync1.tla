@@ -51,5 +51,10 @@ AdvanceClocks(delta) ==
 Next ==
   \E delta \in Int:
     AdvanceClocks(delta)
+
+(******************************* PROPERTIES ***********************************)
+NaiveSkewInv ==
+  \A p, q \in Proc:
+    AC(p) = AC(q)
       
 ===============================================================================
