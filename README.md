@@ -1,8 +1,8 @@
 # Thinking about protocols with TLA+ and Apalache
 
-In this workshop, we are introducing TLA+ and the model checker
-[Apalache](https://apalache.informal.systems). No prior knowledge of TLA+ is
-required.
+We are introducing TLA+ and the model checker
+[Apalache](https://apalache.informal.systems). Prior knowledge of TLA+
+is not required.
 
 ## 1. Step-by-step instructions
 
@@ -11,15 +11,21 @@ required.
 If you want to reproduce the steps, make sure that you have installed
 the following tools first:
 
- - Apalache version 0.16.2. Check [Apalache releases][].
+ - Apalache version 0.16.5. Check [Apalache releases][].
  - **optional**: [TLA Toolbox][] or [VScode plugin for TLA+][]
 
 ### 1.2. Incremental specification of clock synchronization
 
+Material for the [TLA+ tutorial](http://conf.tlapl.us/202110/),
+co-located with [DISC 2021](http://www.disc-conference.org/wp/disc2021/).
+
 Check the specifications in [clock-sync](examples/clock-sync)
-and the extended version of the tutorial (TBA).
+and the extended version of the tutorial (TBA). Follow the
+[clock sync: step-by-step instructions][].
 
 ### 1.3. Incremental specification of token transfer
+
+Material for the workshop at [HackAtom RU 2021][].
 
 Follow the [token transfer: step-by-step instructions][].
 
@@ -58,4 +64,6 @@ you have to introduce the following missing features:
 [Building Apalache from source]: https://apalache.informal.systems/docs/apalache/installation/source.html
 [Apalache releases]: https://github.com/informalsystems/apalache/releases
 [token transfer: step-by-step instructions]: ./docs/token-transfer-steps.md 
+[clock sync: step-by-step instructions]: ./docs/clock-sync-steps.md 
 [ICS20]: https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer
+[HackAtom RU 2021]: https://blog.cosmos.network/hackatom-ru-2021-buckle-up-cosmonauts-we-have-no-problems-and-are-ready-for-takeoff-69c59812b2eb

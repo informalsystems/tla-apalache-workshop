@@ -7,7 +7,7 @@
  *
  * Assumptions: timestamps are natural numbers, not reals.
  *
- * Version 7: Add an inductive invariant for SkewInv
+ * Version 7: Add an inductive invariant for SkewInv (wip)
  * Version 6: Make Proc a parameter and use FoldSet
  * Version 5: Ignoring the message by the process itself
  * Version 4: Adjusting clock values (test 4 + invariant violation)
