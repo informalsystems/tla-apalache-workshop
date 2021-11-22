@@ -7,7 +7,7 @@
  * Attack scenario:
  * https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit#
  *
- * This TLA+ specification is designed with model checking with Apalache.
+ * This TLA+ specification is designed for model checking with Apalache.
  * We do not model 256-bit integers here, as we are not interested in overflows.
  * 
  * Igor Konnov, 2021
