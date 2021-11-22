@@ -14,6 +14,8 @@ the following tools first:
  - Apalache version 0.16.5. Check [Apalache releases][].
  - **optional**: [TLA Toolbox][] or [VScode plugin for TLA+][]
 
+<a name="clocksync"/> 
+
 ### 1.2. Incremental specification of clock synchronization
 
 Material for the [TLA+ tutorial](http://conf.tlapl.us/202110/),
@@ -22,6 +24,8 @@ co-located with [DISC 2021](http://www.disc-conference.org/wp/disc2021/).
 Check the specifications in [clock-sync](examples/clock-sync) and the [extended
 version of the tutorial](https://www.youtube.com/watch?v=Ml7d_3vlH88). Follow
 the [clock sync: step-by-step instructions][].
+
+<a name="ics20"/> 
 
 ### 1.3. Incremental specification of token transfer
 
@@ -35,6 +39,12 @@ complete specification of [ICS20][].  If you want to specify [ICS20][],
 you have to introduce the following missing features:
 
  - acknowledgments.
+
+<a name="erc20"/> 
+
+### 1.4 Specification of ERC20 tokens including the Approve-TransferFrom attack 
+
+
 
 ## 2. Learning more about TLA+
  
