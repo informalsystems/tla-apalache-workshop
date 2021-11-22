@@ -44,7 +44,7 @@ you have to introduce the following missing features:
 
 ### 1.4 Specification of ERC20 tokens including the Approve-TransferFrom attack 
 
-
+Follow the [ERC20: step-by-step instructions][]
 
 ## 2. Learning more about TLA+
  
@@ -77,3 +77,4 @@ you have to introduce the following missing features:
 [clock sync: step-by-step instructions]: ./docs/clock-sync-steps.md 
 [ICS20]: https://github.com/cosmos/ibc/tree/master/spec/app/ics-020-fungible-token-transfer
 [HackAtom RU 2021]: https://blog.cosmos.network/hackatom-ru-2021-buckle-up-cosmonauts-we-have-no-problems-and-are-ready-for-takeoff-69c59812b2eb
+[ERC20: step-by-step instructions]: ./docs/erc20-steps.md
