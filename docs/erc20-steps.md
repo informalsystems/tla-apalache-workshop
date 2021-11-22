@@ -12,7 +12,6 @@
 
     ```sh
     $ apalache-mc check --inv=NoTransferAboveApproved MC_ERC20.tla
-    $ apalache-mc check MC1.tla
     ```
 1. The tool reports an invariant violation.
 1. Open the counterexample and see,
