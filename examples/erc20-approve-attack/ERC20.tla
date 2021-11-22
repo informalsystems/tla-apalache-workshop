@@ -231,7 +231,7 @@ NoApprove ==
 
 \* A trace invariant: For every pair <<spender, fromAddr>>, the sum of transfers
 \* via TransferFrom is no greater than the maximum allowance.
-\* It is quite to formulate this property, as there are scenarios,
+\* It is quite hard to formulate this property, as there are scenarios,
 \* where this behavior is actually expected.
 \* In pure TLA+, we would have to write a temporal property.
 \* In Apalache, we are just writing a trace invariant.
