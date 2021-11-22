@@ -7,7 +7,7 @@
 1. Read the description of the
    [attack scenario on EIP-20](https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/)
 1. Open [ERC20.tla](../examples/erc20-approve-attack/ERC20.tla)
-   and [MC_ERC20.tla](../erc20-approve-attack/MC_ERC20.tla).
+   and [MC_ERC20.tla](../examples/erc20-approve-attack/MC_ERC20.tla).
 1. Check the trace invariant `NoTransferAboveApproved`:
 
     ```sh
