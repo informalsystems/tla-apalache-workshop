@@ -89,13 +89,13 @@ ProcessTransfer(_tx) ==
     /\  LET fail ==
           \/ _tx.value < 0
           \/ _tx.value > balanceOf[_tx.sender]
-          \/ _tx.caller = _tx.toAddr
+          \/ _tx.sender = _tx.toAddr
         IN
         /\ lastTx' = [ _tx EXCEPT !.fail = fail ]
         /\ IF fail
           THEN UNCHANGED <<balanceOf, allowance, nextTxId>>
           ELSE \* transaction succeeds
-               \* update the balances of the 'caller' and 'toAddr' addresses
+               \* update the balances of the 'sender' and 'toAddr' addresses
             /\ balanceOf' = [
                  balanceOf EXCEPT ![_tx.sender] = @ - _tx.value,
                                   ![_tx.toAddr] = @ + _tx.value
