@@ -1,4 +1,4 @@
-# Specification 00_OutParser
+# Specification TokenTransfer3
 
 ```Extends Integers, Sequences, FiniteSets, TLC, Apalache```
 
