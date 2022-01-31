@@ -1,6 +1,9 @@
 -------------------------------- MODULE typedefs ------------------------------
 (*
-  Type aliases to be used in our specifications:
+## Type aliases
+
+  We introduce the following aliases for the types that are used in this
+  specification.
 
   @typeAlias: CHAIN = Str;
   @typeAlias: ACCOUNT = Str;
@@ -10,5 +13,5 @@
   @typeAlias: DENOM = Str;
   @typeAlias: DADDR = <<CHAIN, ACCOUNT, DENOM>>;
  *)
-typedefs_dummy == FALSE
+typedefs_included == TRUE
 ===============================================================================
