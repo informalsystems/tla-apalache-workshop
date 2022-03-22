@@ -36,6 +36,19 @@ VARIABLES
     \* @type: Int;
     returnValue
 
+\* The property of particular interest is this one:
+\*
+\* "Note that this guarantees that the return value will be >= 0 if
+\*  and only if the key is found."
+ReturnValueIsCorrect ==
+    LET MatchingIndices ==
+        { i \in DOMAIN INPUT_SEQ: INPUT_SEQ[i] = INPUT_KEY }
+    IN
+    IF MatchingIndices /= {}
+    THEN \* Indices in TLA+ start with 1, whereas the Java returnValue starts with 0
+        returnValue + 1 \in MatchingIndices
+    ELSE returnValue < 0
+
 Init ==
     /\ low = 0
     /\ high = Len(INPUT_SEQ) - 1
@@ -46,13 +59,36 @@ Init ==
 Next ==
     IF ~isTerminated
     THEN IF low <= high
-      THEN          \* lines 6-14: not implemented yet
-        UNCHANGED <<low, high, isTerminated, returnValue>>
+      THEN          \* lines 6-14
+        LET mid == (low + high) \div 2 IN
+        LET midVal == INPUT_SEQ[mid + 1] IN
+          \//\ midVal < INPUT_KEY \* lines 9-10
+            /\ low' = mid + 1
+            /\ UNCHANGED <<high, returnValue, isTerminated>>
+          \//\ midVal > INPUT_KEY \* lines 11-12
+            /\ high' = mid - 1
+            /\ UNCHANGED <<low, returnValue, isTerminated>>
+          \//\ midVal = INPUT_KEY \* lines 13-14
+            /\ returnValue' = mid
+            /\ isTerminated' = TRUE
+            /\ UNCHANGED <<low, high>>
       ELSE          \* line 16
         /\ isTerminated' = TRUE
         /\ returnValue' = -(low + 1)
         /\ UNCHANGED <<low, high>>
     ELSE            \* isTerminated
       UNCHANGED <<low, high, returnValue, isTerminated>>
+
+\*
+\* INVARIANTS
+\*
+
+\* What we expect from the search when it is finished.
+Postcondition ==
+    isTerminated => ReturnValueIsCorrect
+
+\* Alternative syntax:
+\*Postcondition ==
+\*    ~isTerminated \/ ReturnValueIsCorrect
 
 ===============================================================================

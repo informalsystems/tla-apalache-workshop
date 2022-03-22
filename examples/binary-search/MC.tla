@@ -5,7 +5,7 @@
 INT_WIDTH == 8
 \* the input sequence to try
 \* @type: Seq(Int);
-INPUT_SEQ == << >>
+INPUT_SEQ == << 1, 5, 6, 10, 23, 24 >>
 \* the element to search for
 INPUT_KEY == 10
 
