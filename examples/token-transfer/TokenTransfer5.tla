@@ -35,7 +35,7 @@ VARIABLES
 \* @type: (ADDR -> Int, Set(ADDR)) => Int;
 SumAddresses(amounts, Addrs) ==
     LET Add(sum, addr) == sum + amounts[addr] IN
-    FoldSet(Add, 0, Addrs)
+    ApaFoldSet(Add, 0, Addrs)
 
 \* @type: (ADDR -> Int, CHAIN) => Int;
 ChainSupply(amounts, chain) ==

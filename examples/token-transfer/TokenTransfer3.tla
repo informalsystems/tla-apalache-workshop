@@ -82,7 +82,7 @@ definitions.
  *)
 SumAddresses(amounts, Addrs) ==
     LET Add(sum, addr) == sum + amounts[addr] IN
-    FoldSet(Add, 0, Addrs)
+    ApaFoldSet(Add, 0, Addrs)
 
 (*
   `ChainSupply` computes the supply of every chain in the current state.

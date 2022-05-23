@@ -75,7 +75,7 @@ Native(chain) == chain
 \* @type: (DADDR -> Int, Set(DADDR)) => Int;
 SumAddresses(amounts, Addrs) ==
     LET Add(sum, addr) == sum + amounts[addr] IN
-    FoldSet(Add, 0, Addrs)
+    ApaFoldSet(Add, 0, Addrs)
 
 \* Compute token supply in one chain.
 \* @type: (DADDR -> Int, CHAIN) => Int;
@@ -86,7 +86,7 @@ ChainSupply(amounts, chain) ==
 \* @type: (CHAIN => Int) => Int;
 AllChainsSupply(GetChainSupply(_)) ==
     LET Add(sum, chain) == sum + GetChainSupply(chain) IN
-    FoldSet(Add, 0, CHAINS)
+    ApaFoldSet(Add, 0, CHAINS)
 
 \* Compute chain supply in the genesis block.
 AllChainsGenesisSupply ==

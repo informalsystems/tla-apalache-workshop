@@ -63,7 +63,7 @@ Native(chain) == chain
 \* @type: (DADDR -> Int, Set(DADDR)) => Int;
 SumAddresses(amounts, Addrs) ==
     LET Add(sum, addr) == sum + amounts[addr] IN
-    FoldSet(Add, 0, Addrs)
+    ApaFoldSet(Add, 0, Addrs)
 
 \* @type: (DADDR -> Int, CHAIN) => Int;
 ChainSupply(amounts, chain) ==

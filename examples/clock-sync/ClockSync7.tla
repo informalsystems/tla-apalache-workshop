@@ -8,7 +8,7 @@
  * Assumptions: timestamps are natural numbers, not reals.
  *
  * Version 7: Add an inductive invariant for SkewInv (wip)
- * Version 6: Make Proc a parameter and use FoldSet
+ * Version 6: Make Proc a parameter and use ApaFoldSet
  * Version 5: Ignoring the message by the process itself
  * Version 4: Adjusting clock values (test 4 + invariant violation)
  * Version 3: Receiving messages (test 3)
@@ -70,7 +70,7 @@ DiffSum(df, p) ==
     LET Add(total, q) ==
         total + df[p, q]
     IN
-    FoldSet(Add, 0, Proc)
+    ApaFoldSet(Add, 0, Proc)
 
 (*************************** INITIALIZATION ********************************)
 
