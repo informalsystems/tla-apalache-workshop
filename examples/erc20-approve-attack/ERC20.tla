@@ -10,7 +10,7 @@
  * This TLA+ specification is designed for model checking with Apalache.
  * We do not model 256-bit integers here, as we are not interested in overflows.
  * 
- * Igor Konnov, 2021
+ * Igor Konnov, Informal Systems, 2021-2022
  *)
 EXTENDS Integers, Apalache, ERC20_typedefs
 
@@ -227,7 +227,26 @@ NoApprove ==
     IN
     ~Example
 
-(* Expected properties *)
+\* EXPECTED PROPERTIES
+
+\* No transferFrom should be possible, while there is a pending approval
+\* for a smaller amount. This invariant is violated, as explained in:
+\*
+\* https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit#
+NoTransferFromWhileApproveInFlight ==
+    LET BadExample ==
+        /\ lastTx.tag = "transferFrom"
+        /\ lastTx.value > 0
+        /\ ~lastTx.fail
+        /\ \E approval \in pendingTransactions:
+            /\ approval.tag = "approve"
+            /\ approval.sender = lastTx.fromAddr
+            /\ approval.spender = lastTx.sender
+            /\ lastTx.sender /= lastTx.toAddr
+            /\ approval.value < lastTx.value
+            /\ approval.value > 0
+    IN
+    ~BadExample
 
 \* A trace invariant: For every pair <<spender, fromAddr>>, the sum of transfers
 \* via TransferFrom is no greater than the maximum allowance.
@@ -235,9 +254,6 @@ NoApprove ==
 \* where this behavior is actually expected.
 \* In pure TLA+, we would have to write a temporal property.
 \* In Apalache, we are just writing a trace invariant.
-\*
-\* This property is known to be violated:
-\* https://docs.google.com/document/d/1YLPtQxZu1UAvO9cZ1O2RPXBbT0mooh4DYKjA_jp-RLM/edit#
 \* 
 \* @type: Seq(STATE) => Bool;
 NoTransferAboveApproved(trace) ==

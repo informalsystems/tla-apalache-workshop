@@ -2,8 +2,7 @@
 (*
   Type definitions for the module ERC20.
 
-  An account address, in our case, simply an uninterpreted string:
-  @typeAlias: ADDR = Str;
+  An account address, in our case, simply an uninterpreted type ADDR.
 
   A transaction (a la discriminated union but all fields are packed together):
   @typeAlias: TX = [

@@ -5,7 +5,7 @@ EXTENDS ERC20_typedefs
 \* Use the set of three addresses.
 \* We are using uninterpreted values, similar to TLC's model values.
 \* See: https://apalache.informal.systems/docs/HOWTOs/uninterpretedTypes.html
-ADDR == { "addr1", "addr2", "addr3" }
+ADDR == { "Alice_OF_ADDR", "Bob_OF_ADDR", "Eve_OF_ADDR" }
 
 VARIABLES
     \* @type: ADDR -> Int;
