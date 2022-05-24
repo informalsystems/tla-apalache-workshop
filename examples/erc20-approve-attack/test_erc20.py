@@ -9,10 +9,10 @@ from hypothesis import assume, settings, event, Verbosity
 
 # The list of addresses to use. We could use real addresses here,
 # but simple readable names are much nicer.
-ADDR = [ "addr1", "addr2", "addr3" ]
+ADDR = [ "Alice", "Bob", "Eve" ]
 
 # We restrict the amounts to a small range, to avoid too much randomness
-AMOUNTS = range(0, 3)
+AMOUNTS = range(0, 4)
 
 
 class TransferTx:
