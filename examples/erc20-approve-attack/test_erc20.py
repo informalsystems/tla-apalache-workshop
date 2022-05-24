@@ -12,7 +12,7 @@ from hypothesis import assume, settings, event, Verbosity
 ADDR = [ "addr1", "addr2", "addr3" ]
 
 # We restrict the amounts to a small range, to avoid too much randomness
-AMOUNTS = range(0, 10)
+AMOUNTS = range(0, 3)
 
 
 class TransferTx:

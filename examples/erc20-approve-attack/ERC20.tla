@@ -255,7 +255,7 @@ NoTransferAboveApproved(trace) ==
         \* the sum of all transfers from 'fromAddr' to 'toAddr'
         LET sumTransfers ==
             LET Add(sum, i) == sum + trace[i].lastTx.value IN
-            FoldSet(Add, 0, TransferIndices)
+            ApaFoldSet(Add, 0, TransferIndices)
         IN
         \* there exists an approval for the whole transfer sum
         LET existsApprovalForSumInPast ==
