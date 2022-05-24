@@ -58,59 +58,64 @@ class Erc20Simulator(RuleBasedStateMachine):
             addr: amount for (addr, amount) in zip(ADDR, amounts)
         }
         self.allowance = { (src, dst): 0 for src in ADDR for dst in ADDR }
-        # history variables for checking properties
-        self.histAllowance = { (src, dst): 0 for src in ADDR for dst in ADDR }
-        self.histSumTransferFrom = {
-            (src, dst): 0 for src in ADDR for dst in ADDR
-        }
+        self.pendingTxs = set()
+        self.lastTx = None
 
     @rule(target=pendingTxs, _sender=st.sampled_from(ADDR),
             _toAddr=st.sampled_from(ADDR), _value=st.sampled_from(AMOUNTS))
     def add_transfer(self, _sender, _toAddr, _value):
-        return TransferTx(_sender, _toAddr, _value)
+        tx = TransferTx(_sender, _toAddr, _value)
+        self.pendingTxs.add(tx)
+        return tx
 
     @rule(target=pendingTxs, _sender=st.sampled_from(ADDR),
             _fromAddr=st.sampled_from(ADDR),
             _toAddr=st.sampled_from(ADDR), _value=st.sampled_from(AMOUNTS))
     def add_transfer_from(self, _sender, _fromAddr, _toAddr, _value):
-        return TransferFromTx(_sender, _fromAddr, _toAddr, _value)
+        tx = TransferFromTx(_sender, _fromAddr, _toAddr, _value)
+        self.pendingTxs.add(tx)
+        return tx
 
     @rule(target=pendingTxs, _sender=st.sampled_from(ADDR),
             _spender=st.sampled_from(ADDR), _value=st.sampled_from(AMOUNTS))
     def add_approve(self, _sender, _spender, _value):
-        return ApproveTx(_sender, _spender, _value)
+        tx = ApproveTx(_sender, _spender, _value)
+        self.pendingTxs.add(tx)
+        return tx
 
-    @rule(tx=pendingTxs)
+    @rule(tx=consumes(pendingTxs))
     def process_transfer(self, tx):
         assume(tx.tag == "transfer" \
                and tx.value <= self.balanceOf[tx.sender] \
                and tx.value > 0 \
                and tx.sender != tx.toAddr)
+        self.pendingTxs.remove(tx)
         self.balanceOf[tx.sender] -= tx.value
         self.balanceOf[tx.toAddr] += tx.value
+        self.lastTx = tx
         event("transfer")
 
-    @rule(tx=pendingTxs)
+    @rule(tx=consumes(pendingTxs))
     def process_transfer_from(self, tx):
         assume(tx.tag == "transferFrom" \
                and tx.value > 0 \
                and tx.value <= self.balanceOf[tx.fromAddr] \
                and tx.value <= self.allowance[(tx.fromAddr, tx.sender)] \
                and tx.fromAddr != tx.toAddr)
+        self.pendingTxs.remove(tx)
         self.balanceOf[tx.fromAddr] -= tx.value
         self.balanceOf[tx.toAddr] += tx.value
         self.allowance[(tx.fromAddr, tx.sender)] -= tx.value
-        # update the history variable
-        self.histSumTransferFrom[(tx.fromAddr, tx.sender)] += tx.value
+        self.lastTx = tx
         event("transferFrom")
 
-    @rule(tx=pendingTxs)
+    @rule(tx=consumes(pendingTxs))
     def process_approve(self, tx):
         assume(tx.tag == "approve" \
                and tx.value > 0 and tx.sender != tx.spender)
+        self.pendingTxs.remove(tx)
         self.allowance[(tx.sender, tx.spender)] = tx.value
-        # update the history variable
-        self.histAllowance[(tx.sender, tx.spender)] = tx.value
+        self.lastTx = tx
         event("approve")
 
     @invariant()
@@ -120,10 +125,16 @@ class Erc20Simulator(RuleBasedStateMachine):
 
     @invariant()
     def all_transfers_approved(self):
-        for spender in ADDR:
-            for fromAddr in ADDR:
-                total = self.histSumTransferFrom[(spender, fromAddr)]
-                assert(total <= self.histAllowance[(spender, fromAddr)])
+        last = self.lastTx
+        if last:
+            if last.tag == "transferFrom" and last.value > 0:
+                for p in self.pendingTxs:
+                    if p.tag == "approve" \
+                            and p.sender == last.fromAddr \
+                            and p.spender == last.sender \
+                            and last.sender != last.toAddr \
+                            and p.value < last.value and p.value > 0:
+                        assert(false)
 
     # Uncomment the following invariant to check,
     # whether it is possible to have allowances in progress.
