@@ -83,7 +83,7 @@ SubmitTransfer(_sender, _toAddr, _value) ==
 (*
  Process a Transfer transaction that was submitted with SubmitTransfer.
  *)
-ProcessTransfer(_tx) == 
+CommitTransfer(_tx) == 
     /\ _tx.tag = "transfer"
     /\ pendingTransactions' = pendingTransactions \ { _tx }
     /\  LET fail ==
@@ -130,7 +130,7 @@ SubmitTransferFrom(_sender, _fromAddr, _toAddr, _value) ==
 (*
  Process a TranferFrom transaction that was submitted with SubmitTransferFrom.
  *)
-ProcessTransferFrom(_tx) == 
+CommitTransferFrom(_tx) == 
     /\ _tx.tag = "transferFrom"
     /\ pendingTransactions' = pendingTransactions \ { _tx }
     /\  LET fail ==
@@ -172,7 +172,7 @@ SubmitApprove(_sender, _spender, _value) ==
     /\ UNCHANGED <<balanceOf, allowance>>
 
 \* Process an Approve transaction that was submitted with SubmitApprove.
-ProcessApprove(_tx) ==
+CommitApprove(_tx) ==
     /\ _tx.tag = "approve"
     /\ pendingTransactions' = pendingTransactions \ { _tx }
     /\ UNCHANGED <<balanceOf, nextTxId>>
@@ -198,9 +198,9 @@ Next ==
          \E value \in Int:
            SubmitApprove(sender, spender, value)
     \/ \E tx \in pendingTransactions:
-        \/ ProcessTransfer(tx)
-        \/ ProcessTransferFrom(tx)
-        \/ ProcessApprove(tx)
+        \/ CommitTransfer(tx)
+        \/ CommitTransferFrom(tx)
+        \/ CommitApprove(tx)
 
 
 (* False invariants to debug the spec *)
