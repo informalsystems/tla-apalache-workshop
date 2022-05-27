@@ -151,7 +151,7 @@ class Erc20Simulator(RuleBasedStateMachine):
         event("approve")
 
     @invariant()
-    def non_negative_balances(self):
+    def no_negative_balances(self):
         # a simple invariant to make sure that the balances do not go negative
         for addr in ADDR:
             assert(self.balanceOf[addr] >= 0)
