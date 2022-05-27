@@ -1,0 +1,69 @@
+State 1: <Init line 60, col 5 to line 67, col 60 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 0 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 0
+/\ pendingTransactions = {}
+
+State 2: <SubmitApprove line 174, col 5 to line 177, col 41 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 0 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 1
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice]}
+
+State 3: <SubmitApprove line 174, col 5 to line 177, col 41 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 0 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 2
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 1, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 12, spender |-> A_Alice]}
+
+State 4: <SubmitTransferFrom line 130, col 5 to line 133, col 41 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 0 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 3
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 1, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 12, spender |-> A_Alice], [id |-> 2, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Bob, toAddr |-> A_Eve, value |-> 6, fromAddr |-> A_Alice]}
+
+State 5: <Next line 205, col 8 to line 208, col 28 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 12 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 1, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 12, spender |-> A_Alice]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 3
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 2, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Bob, toAddr |-> A_Eve, value |-> 6, fromAddr |-> A_Alice]}
+
+State 6: <SubmitApprove line 174, col 5 to line 177, col 41 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 12 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 4
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 3, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 2, spender |-> A_Bob], [id |-> 2, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Bob, toAddr |-> A_Eve, value |-> 6, fromAddr |-> A_Alice]}
+
+State 7: <SubmitTransferFrom line 130, col 5 to line 133, col 41 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 12 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 5
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 3, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 2, spender |-> A_Bob], [id |-> 2, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Bob, toAddr |-> A_Eve, value |-> 6, fromAddr |-> A_Alice], [id |-> 4, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Eve, toAddr |-> A_Bob, value |-> 18, fromAddr |-> A_Bob]}
+
+State 8: <SubmitTransferFrom line 130, col 5 to line 133, col 41 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 12 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 6
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 3, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 2, spender |-> A_Bob], [id |-> 2, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Bob, toAddr |-> A_Eve, value |-> 6, fromAddr |-> A_Alice], [id |-> 4, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Eve, toAddr |-> A_Bob, value |-> 18, fromAddr |-> A_Bob], [id |-> 5, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Alice, toAddr |-> A_Eve, value |-> 10, fromAddr |-> A_Bob]}
+
+State 9: <SubmitTransferFrom line 130, col 5 to line 133, col 41 of module ERC20>
+/\ allowance = (<<A_Alice, A_Alice>> :> 0 @@ <<A_Alice, A_Bob>> :> 0 @@ <<A_Alice, A_Eve>> :> 0 @@ <<A_Bob, A_Alice>> :> 12 @@ <<A_Bob, A_Bob>> :> 0 @@ <<A_Bob, A_Eve>> :> 0 @@ <<A_Eve, A_Alice>> :> 0 @@ <<A_Eve, A_Bob>> :> 0 @@ <<A_Eve, A_Eve>> :> 0)
+/\ lastTx = [id |-> 0, tag |-> "None", fail |-> FALSE]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 11 @@ A_Eve :> 4)
+/\ nextTxId = 7
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 3, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 2, spender |-> A_Bob], [id |-> 2, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Bob, toAddr |-> A_Eve, value |-> 6, fromAddr |-> A_Alice], [id |-> 4, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Eve, toAddr |-> A_Bob, value |-> 18, fromAddr |-> A_Bob], [id |-> 5, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Alice, toAddr |-> A_Eve, value |-> 10, fromAddr |-> A_Bob], [id |-> 6, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Alice, toAddr |-> A_Alice, value |-> 15, fromAddr |-> A_Alice]}
+
+State 10: <Next line 205, col 8 to line 208, col 28 of module ERC20>
+/\ allowance = [pair \in {<<A_Alice, A_Alice>>, <<A_Alice, A_Bob>>, <<A_Alice, A_Eve>>, <<A_Bob, A_Alice>>, <<A_Bob, A_Bob>>, <<A_Bob, A_Eve>>, <<A_Eve, A_Alice>>, <<A_Eve, A_Bob>>, <<A_Eve, A_Eve>>} |-> <expression 0>]
+/\ lastTx = [id |-> 5, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Alice, toAddr |-> A_Eve, value |-> 10, fromAddr |-> A_Bob]
+/\ balanceOf = (A_Alice :> 15 @@ A_Bob :> 1 @@ A_Eve :> 14)
+/\ nextTxId = 7
+/\ pendingTransactions = {[id |-> 0, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 5, spender |-> A_Alice], [id |-> 3, tag |-> "approve", fail |-> FALSE, sender |-> A_Bob, value |-> 2, spender |-> A_Bob], [id |-> 2, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Bob, toAddr |-> A_Eve, value |-> 6, fromAddr |-> A_Alice], [id |-> 4, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Eve, toAddr |-> A_Bob, value |-> 18, fromAddr |-> A_Bob], [id |-> 6, tag |-> "transferFrom", fail |-> FALSE, sender |-> A_Alice, toAddr |-> A_Alice, value |-> 15, fromAddr |-> A_Alice]}
