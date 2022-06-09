@@ -17,7 +17,7 @@ import unittest
 
 from hypothesis import given, strategies as gen
 from hypothesis.stateful import Bundle, RuleBasedStateMachine
-from hypothesis.stateful import rule, consumes, invariant, initialize
+from hypothesis.stateful import rule, consumes, invariant, initialize, precondition
 from hypothesis import assume, settings, event, Verbosity
 
 # The list of addresses to use. We could use real addresses here,
@@ -25,7 +25,7 @@ from hypothesis import assume, settings, event, Verbosity
 ADDR = [ "Alice", "Bob", "Eve" ]
 
 # We restrict the amounts to a small range, to avoid too much randomness
-AMOUNTS = range(0, 3)
+AMOUNTS = range(0, 20)
 
 
 class TransferTx:
@@ -67,7 +67,9 @@ class Erc20Simulator(RuleBasedStateMachine):
 
     # This bundle contains the generated transactions
     # that are to be processed
-    pendingTxs = Bundle("pendingTxs")
+    pendingTransfers = Bundle("pendingTransfers")
+    pendingApproves = Bundle("pendingApproves")
+    pendingTransferFroms = Bundle("pendingTransferFroms")
 
     @initialize(amounts=gen.lists(gen.sampled_from(AMOUNTS),
                 min_size=len(ADDR),
@@ -85,7 +87,7 @@ class Erc20Simulator(RuleBasedStateMachine):
         self.pendingTxsShadow = set()
         self.lastTx = None
 
-    @rule(target=pendingTxs, _sender=gen.sampled_from(ADDR),
+    @rule(target=pendingTransfers, _sender=gen.sampled_from(ADDR),
           _toAddr=gen.sampled_from(ADDR), _value=gen.sampled_from(AMOUNTS))
     def submit_transfer(self, _sender, _toAddr, _value):
         # submit a transfer transaction on the client side
@@ -94,7 +96,7 @@ class Erc20Simulator(RuleBasedStateMachine):
         self.lastTx = None
         return tx
 
-    @rule(target=pendingTxs, _sender=gen.sampled_from(ADDR),
+    @rule(target=pendingTransferFroms, _sender=gen.sampled_from(ADDR),
           _fromAddr=gen.sampled_from(ADDR),
           _toAddr=gen.sampled_from(ADDR), _value=gen.sampled_from(AMOUNTS))
     def submit_transfer_from(self, _sender, _fromAddr, _toAddr, _value):
@@ -104,7 +106,7 @@ class Erc20Simulator(RuleBasedStateMachine):
         self.lastTx = None
         return tx
 
-    @rule(target=pendingTxs, _sender=gen.sampled_from(ADDR),
+    @rule(target=pendingApproves, _sender=gen.sampled_from(ADDR),
           _spender=gen.sampled_from(ADDR), _value=gen.sampled_from(AMOUNTS))
     def submit_approve(self, _sender, _spender, _value):
         # submit an approve transaction on the client side
@@ -113,11 +115,10 @@ class Erc20Simulator(RuleBasedStateMachine):
         self.lastTx = None
         return tx
 
-    @rule(tx=consumes(pendingTxs))
+    @rule(tx=consumes(pendingTransfers))
     def commit_transfer(self, tx):
         # process a transfer transaction somewhere in the blockchain
-        assume(tx.tag == "transfer"
-               and tx.value <= self.balanceOf[tx.sender]
+        assume(tx.value <= self.balanceOf[tx.sender]
                and tx.value > 0
                and tx.sender != tx.toAddr)
         self.pendingTxsShadow.remove(tx)
@@ -126,11 +127,10 @@ class Erc20Simulator(RuleBasedStateMachine):
         self.lastTx = tx
         event("transfer")
 
-    @rule(tx=consumes(pendingTxs))
+    @rule(tx=consumes(pendingTransferFroms))
     def commit_transfer_from(self, tx):
         # process a transferFrom transaction somewhere in the blockchain
-        assume(tx.tag == "transferFrom"
-               and tx.value > 0
+        assume(tx.value > 0
                and tx.value <= self.balanceOf[tx.fromAddr]
                and tx.value <= self.allowance[(tx.fromAddr, tx.sender)]
                and tx.fromAddr != tx.toAddr)
@@ -141,10 +141,10 @@ class Erc20Simulator(RuleBasedStateMachine):
         self.lastTx = tx
         event("transferFrom")
 
-    @rule(tx=consumes(pendingTxs))
+    @rule(tx=consumes(pendingApproves))
     def commit_approve(self, tx):
         # process an approve transaction somewhere in the blockchain
-        assume(tx.tag == "approve" and tx.value > 0 and tx.sender != tx.spender)
+        assume(tx.value > 0 and tx.sender != tx.spender)
         self.pendingTxsShadow.remove(tx)
         self.allowance[(tx.sender, tx.spender)] = tx.value
         self.lastTx = tx
