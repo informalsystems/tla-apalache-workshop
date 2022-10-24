@@ -11,6 +11,8 @@ const_165365715019242000 ==
 {A_Alice, A_Bob, A_Eve}
 ----
 
+const_initial_balances == [a \in {A_Alice, A_Bob, A_Eve} |-> 15]
+
 \* SYMMETRY definition
 symm_165365715019243000 == 
 Permutations(const_165365715019242000)
