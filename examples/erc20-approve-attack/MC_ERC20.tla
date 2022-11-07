@@ -21,6 +21,8 @@ ADDR == ADDR3
 \* Apalache can draw constants from the set of all integers
 AMOUNTS == Int
 
+INITIAL_BALANCES == [a \in ADDR |-> 100]
+
 VARIABLES
     \* @type: ADDR -> Int;
     balanceOf,
