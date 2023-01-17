@@ -90,7 +90,7 @@ AdvanceClocks(delta) ==
   /\ \A m \in msgs:
         hc[m.src] + delta > t_max =>
             \A p \in Proc:
-                m \in rcvd[m.src]
+                m \in rcvd[p]
   \* clocks are advanced uniformly
   /\ time' = time + delta
   /\ hc' = [ p \in Proc |-> hc[p] + delta ]
