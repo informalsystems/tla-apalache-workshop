@@ -17,19 +17,21 @@
 
 EXTENDS Integers, Apalache, erc20_typedefs
 
-CONSTANT
+CONSTANTS
   \* The set of all addresses that we are using
   \*
   \* @type: Set(ADDR);
-  AllAddresses
+  AllAddresses,
+  \* The maximal value of the unsigned integer in EVM
+  \*
+  \* @type: Int;
+  MAX_UINT
 
 \* The special address, which corresponds to the special address 0x0 in EVM
 ZERO_ADDRESS == "0_OF_ADDR"
 
 ASSUME(ZERO_ADDRESS \in AllAddresses)
 
-\* The maximal value of the unsigned integer in EVM
-MAX_UINT == 2^256 - 1
 \* The predicate that we use to check for overflows
 isUint(i) == 0 <= i /\ i <= MAX_UINT
 
