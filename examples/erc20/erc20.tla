@@ -3,7 +3,7 @@
  * A specification of simple ERC20 that should be easy to use in other specs.
  *
  * The module erc20 closely follows the interface of IERC20 by OpenZeppelin.
- * However, since Quint is not Solidity, we have to adapt to the features of Quint.
+ * Since, TLA+ is different, we adapt the modeling primitives to TLA+.
  *
  * https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#IERC20
  *

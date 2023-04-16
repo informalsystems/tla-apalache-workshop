@@ -88,7 +88,7 @@ initArbitrary ==
 \* but this would require to define ghost variables.
 \*
 \* apalache-mc check --init=initArbitrary --next=Next1 \
-\*  --inv=transferPrePost --length=1 erc20_tests.tla
+\*  --inv=transferPrePost --length=2 erc20_tests.tla
 transferPrePost ==
   \E sender, toAddr \in AllAddresses:
     LET ob == state.balanceOf IN
