@@ -1,7 +1,7 @@
 # Specifying the ERC20 interface and mempool
 
 This directory contains several TLA+ specifications related to the
-[ERC20 token][]:
+ERC20 token, see [EIP-20][]:
 
  - [erc20.tla][] is a specification of the ERC20
    that follows the implementation of [ERC20 by OpenZeppelin][].
@@ -27,6 +27,10 @@ expressive constructs of TLA+ such as nested EXCEPTs. Hence, you can use these
 two specifications to compare the syntax of Quint with the syntax of TLA+.
 
 
+[erc20.tla]: ./erc20.tla
+[erc20_tests.tla]: ./erc20_tests.tla
+[erc20_mempool.tla]: ./erc20_mempool.tla
+[EIP-20]: https://eips.ethereum.org/EIPS/eip-20
 [ERC20 by OpenZeppelin]: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol
 [totalSupplyInv]: https://github.com/informalsystems/tla-apalache-workshop/blob/0f13bf0547ca7f8c3f9b6ccdcd0c90b940d1a9a5/examples/erc20/erc20_tests.tla#L54
 [zeroAddressInv]: https://github.com/informalsystems/tla-apalache-workshop/blob/0f13bf0547ca7f8c3f9b6ccdcd0c90b940d1a9a5/examples/erc20/erc20_tests.tla#L56
