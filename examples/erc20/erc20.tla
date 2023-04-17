@@ -2,10 +2,10 @@
 (*
  * A specification of simple ERC20 that should be easy to use in other specs.
  *
- * The module erc20 closely follows the interface of IERC20 by OpenZeppelin.
+ * The module erc20 closely follows the implementation by OpenZeppelin.
  * Since, TLA+ is different, we adapt the modeling primitives to TLA+.
  *
- * https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#IERC20
+ * https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20.sol
  *
  * Our approach to the TLA+ specification may look non-standard at first.
  * We have first specified this module in Quint and then translated it to TLA+ (by hand).

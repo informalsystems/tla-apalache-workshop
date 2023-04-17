@@ -12,6 +12,8 @@ AllAddresses == {
 }
 
 MAX_UINT == 2^256 - 1
+\* Use a tiny value of MAX_UINT, if you'd like to run it in TLC:
+\* MAX_UINT == 2^2 - 1
 AMOUNTS == 0..MAX_UINT
 
 INSTANCE erc20
