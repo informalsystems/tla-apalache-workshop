@@ -1,5 +1,9 @@
 ---------------------------- MODULE erc20_tests --------------------------------
-\* A state machine for model checking the contract
+(*
+ * A state machine for model checking the contract
+ *
+ * Igor Konnov, Informal Systems, 2023
+ *)
 
 EXTENDS Integers
 

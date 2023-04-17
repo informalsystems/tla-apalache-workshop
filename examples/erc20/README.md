@@ -26,6 +26,8 @@ by hand. While doing this translation, we made our best to use the more
 expressive constructs of TLA+ such as nested EXCEPTs. Hence, you can use these
 two specifications to compare the syntax of Quint with the syntax of TLA+.
 
+This specification is presented as a running example in the tutorial at
+[TLA+ Community Event 2023][] by [Igor Konnov][].
 
 [erc20.tla]: ./erc20.tla
 [erc20_tests.tla]: ./erc20_tests.tla
@@ -39,3 +41,5 @@ two specifications to compare the syntax of Quint with the syntax of TLA+.
 [issue #20]: https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 [erc20.qnt]: https://github.com/informalsystems/quint/tree/main/examples/solidity/ERC20
 [Quint]: https://github.com/informalsystems/quint
+[TLA+ Community Event 2023]: https://conf.tlapl.us/2023/
+[Igor Konnov]: https://github.com/konnov
